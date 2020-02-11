@@ -7,7 +7,7 @@ Dependencies
 ------------
 
 - Python 2.7
-- PyCrypto (https://www.dlitz.net/software/pycrypto)
+- PyCryptodomeX
 - Mutagen (https://bitbucket.org/lazka/mutagen)
 
 Optional dependencies

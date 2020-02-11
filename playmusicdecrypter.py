@@ -19,7 +19,6 @@
 __version__ = "2.0"
 
 import os, sys, struct, re, glob, optparse, time
-import Crypto.Cipher.AES, Crypto.Util.Counter
 import mutagen
 import sqlite3
 
@@ -50,9 +49,16 @@ class PlayMusicDecrypter:
 
         iv = data[:16]
         encrypted = data[16:]
+        
+        initval = struct.unpack(">Q", iv[8:])[0]
+        
+        from Cryptodome.Cipher import AES
+        from Cryptodome.Util import Counter
 
-        counter = Crypto.Util.Counter.new(64, prefix=iv[:8], initial_value=struct.unpack(">Q", iv[8:])[0])
-        cipher = Crypto.Cipher.AES.new(self.info["CpData"], Crypto.Cipher.AES.MODE_CTR, counter=counter)
+        bytedata = bytes(self.info["CpData"])
+
+        counter = Counter.new(64, prefix = iv[:8], initial_value = initval)
+        cipher = AES.new(bytedata, AES.MODE_CTR, counter=counter)
 
         return cipher.decrypt(encrypted)
 
