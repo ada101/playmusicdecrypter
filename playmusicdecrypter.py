@@ -190,7 +190,7 @@ def decrypt_files(source_dir="encrypted", destination_dir=".", database="music.d
 
             decrypter.decrypt_all(outfile)
             decrypter.update_id3(outfile)
-            os.remove(f)
+
         print("  Decryption finished ({:.1f}s)!".format(time.time() - start_time))
     else:
         print("  No files found! Exiting...")
